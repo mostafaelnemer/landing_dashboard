@@ -46,6 +46,7 @@ export function spreadOfferType(slug, raw) {
   const hasChocoBar = groups.includes('chocoBar')
   if (hasSpread && hasChocoBar) return 'mixed'
   if (hasChocoBar) return 'chocoBar'
+  if (hasSpread) return 'spread'
   if (slug === 'spread-choco-bar') return 'mixed'
   if (slug === 'choco-bar') return 'chocoBar'
   return 'spread'
