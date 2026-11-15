@@ -10,7 +10,8 @@ assert.equal(flavorData(hidden, 'cola', 'summer').flavorsAvailable, false);
 
 const mixed = defaultFlavors('spread', 'spread-choco-bar');
 assert.equal(flavorData(mixed, 'spread', 'spread-choco-bar').flavorsAvailable, true);
-assert.equal(flavorData(mixed.filter(f => f.group === 'spread'), 'spread', 'spread-choco-bar').flavorsAvailable, false);
+// Removing every choco bar flavor turns the mixed slug into a jars offer (dashboard choice wins over the slug).
+assert.deepEqual(flavorData(mixed.filter(f => f.group === 'spread'), 'spread', 'spread-choco-bar').flavorGroups, ['spread']);
 assert.equal(flavorData(mixed.map(f => f.group === 'chocoBar' ? { ...f, is_active: false } : f), 'spread', 'spread-choco-bar').flavorsAvailable, false);
 assert.equal(flavorData([], 'spread', 'two-jars').flavorOptions.length, 5);
 
@@ -63,3 +64,10 @@ assert.deepEqual(flavorData(sharedColaFlavors, 'spread', 'shared', null, null, t
 assert.equal(flavorData(sharedColaFlavors, 'spread', 'shared', null, null, true).flavorsAvailable, true);
 assert.equal(flavorData(sharedColaFlavors, 'spread', 'shared').flavorsAvailable, false);
 console.log('Flavor contract checks passed: legacy data, hidden groups, stable IDs, image fallback, flavorless offers, bundle components and shared offers.');
+
+// New bar landings: each page has its own single flavor group.
+assert.deepEqual(flavorGroups('choco-bar', 'any-slug'), ['chocoBar']);
+assert.equal(flavorData([], 'choco-bar', 'five-bars').flavorOptions.length, 6);
+assert.deepEqual(flavorGroups('halawa-bar', 'any-slug'), ['halawaBar']);
+assert.equal(flavorData([], 'halawa-bar', 'four-bars').flavorOptions.length, 5);
+assert.equal(flavorData([], 'halawa-bar', 'four-bars').flavorsAvailable, true);

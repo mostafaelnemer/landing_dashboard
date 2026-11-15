@@ -1,7 +1,7 @@
 import { shippingLabel } from './shipping'
 import { flavorData } from './flavorCatalog'
 import { useCallback, useEffect, useState } from 'react'
-import { supabase, SITES } from './supabase'
+import { supabase, SITES, SITE_NAMES } from './supabase'
 import OfferForm from './OfferForm.jsx'
 import { useOfferListMotion } from './useOfferListMotion'
 import { defaultOfferImage } from './offerImages'
@@ -9,7 +9,7 @@ import PageContentEditor from './PageContentEditor'
 import ChangeHistory from './ChangeHistory'
 
 const fmt = (n) => Number(n).toLocaleString('en-US')
-const siteLabels = { cola: 'الكولا', 'ice-cream': 'الآيس كريم', spread: 'السبريد' }
+const siteLabels = SITE_NAMES
 
 export default function Dashboard({ session }) {
   const [site, setSite] = useState(SITES[0].key)

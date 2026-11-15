@@ -13,6 +13,14 @@ const timers = [
   field('floatingCta', 'نص زر الطلب بجانب العدّاد السفلي', 'اطلب دلوقتي', 40),
 ]
 
+// Shared layout for the two bar landings (same blocks as the spread page).
+const barPage = (promo2, promo3, footerNote) => [
+  { id: 'promo', title: 'شريط الرسائل العلوي', fields: [field('promo1', 'الرسالة الأولى', '💳 الدفع عند الاستلام'), field('promo2', 'الرسالة الثانية', promo2), field('promo3', 'الرسالة الثالثة', promo3)] },
+  { id: 'header', title: 'أزرار وروابط أعلى الصفحة', fields: [header, field('navBenefits', 'رابط المميزات', 'المميزات', 35), field('navOffers', 'رابط العروض', 'العروض', 35), field('navOrder', 'رابط الطلب', 'اطلب الآن', 35)] },
+  { id: 'bottom', title: 'العدّاد وشريط الطلب', fields: [...timers, checkout] },
+  { id: 'footer', title: 'أسفل الصفحة', fields: [field('footerTagline', 'الوصف تحت الشعار', 'Healthy food for all people', 180), field('footerNote', 'النص الختامي', footerNote, 250, 'textarea'), ...contact] },
+]
+
 export const PAGE_CONTENT_SECTIONS = {
   cola: [
     { id: 'header', title: 'أعلى الصفحة', fields: [header] },
@@ -31,6 +39,8 @@ export const PAGE_CONTENT_SECTIONS = {
     { id: 'bottom', title: 'العدّاد وشريط الطلب', fields: [...timers, checkout] },
     { id: 'footer', title: 'أسفل الصفحة', fields: [field('footerTagline', 'الوصف تحت الشعار', 'Healthy food for all people', 180), field('footerNote', 'النص الختامي', 'Healthy Spread بطعم غني يناسب حياتك الصحية.', 250, 'textarea')] },
   ],
+  'halawa-bar': barPage('🍯 جديد: حلاوة بار', 'Healthy Halawa Bar بدون سكر مضاف', 'Healthy Halawa Bar — حلاوة طحينية صحية في قطعة سهلة تاخدها معاك.'),
+  'choco-bar': barPage('🍫 شيكولاتة بار 40 جرام', 'Healthy Choco Bar بدون سكر مضاف', 'Healthy Choco Bar — شيكولاتة صحية بطعم غني من غير سكر مضاف.'),
 }
 
 export const contentFields = site => (PAGE_CONTENT_SECTIONS[site] || []).flatMap(section => section.fields)

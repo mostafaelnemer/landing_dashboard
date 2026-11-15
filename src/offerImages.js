@@ -17,6 +17,7 @@ const images = new Map([
   ['ice-cream:icecream', icecream], ['ice-cream:ketobar', ketobar], ['ice-cream:halawa', halawa],
   ['spread:two-jars', spreadTwo], ['spread:three-jars', spreadThree], ['spread:four-jars', spreadFour],
   ['spread:choco-bar', chocoBar], ['spread:spread-choco-bar', spreadChocoBar],
+  ['choco-bar:five-bars', chocoBar],
 ])
 
 export const defaultOfferImage = (site, slug) => images.get(`${site}:${slug}`) || null

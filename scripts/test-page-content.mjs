@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { contentFields, defaultPageContent, resolvePageContent, validatePageContent } from '../src/pageContent.js'
 
-for (const site of ['cola', 'ice-cream', 'spread']) {
+for (const site of ['cola', 'ice-cream', 'spread', 'halawa-bar', 'choco-bar']) {
   const defaults = defaultPageContent(site)
   assert.equal(validatePageContent(site, defaults), '')
   assert.equal(new Set(contentFields(site).map(field => field.key)).size, contentFields(site).length)

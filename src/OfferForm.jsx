@@ -5,11 +5,11 @@ import BundleEditor from './BundleEditor'
 import ImageUpload from './ImageUpload'
 import { defaultFlavorsForGroup, normalizeFlavors, normalizeSelection, spreadOfferType } from './flavorCatalog'
 import { useEffect, useRef, useState } from 'react'
-import { supabase, SITES } from './supabase'
+import { supabase, SITES, SITE_NAMES } from './supabase'
 import { uploadImage } from './imageUtils'
 import { defaultOfferImage } from './offerImages'
 
-const siteNames = { cola: 'الكولا', 'ice-cream': 'الآيس كريم', spread: 'السبريد' }
+const siteNames = SITE_NAMES
 const siteName = (key) => siteNames[key] || key
 
 const emptyOffer = (nextOrder) => {

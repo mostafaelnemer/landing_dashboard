@@ -252,7 +252,7 @@ input:disabled { opacity: 0.6; }
 .file-btn:focus-within { outline: 2px solid var(--primary); outline-offset: 2px; }
 .file-btn.is-disabled { opacity: 0.55; cursor: wait; }
 .content { max-width: 1040px; padding-top: 28px; }
-.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }
+.tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); overflow: visible; }
 .tabs .tab { padding-inline: 10px; }
 .section-description { margin: 6px 0 0; }
 .section-head { align-items: flex-start; margin: 24px 0 20px; }
@@ -313,6 +313,7 @@ input:disabled { opacity: 0.6; }
   .section-head { flex-wrap: wrap; }
   .section-head h2 { font-size: 1.35rem; }
   .tabs { gap: 6px; }
+  .tabs { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
   .tabs .tab { padding: 10px 4px; font-size: 0.85rem; }
   .offer-overview { gap: 8px; }
   .offer-overview > div { padding: 10px 6px; gap: 4px; flex-wrap: wrap; justify-content: center; text-align: center; }

@@ -3,8 +3,9 @@ import { PAGE_CONTENT_SECTIONS, defaultPageContent, validatePageContent } from '
 import { useContentWorkspace } from './useContentWorkspace'
 import { ChangeList, revisionChanges } from './ChangeHistory'
 import ActualPreview from './ActualPreview'
+import { SITE_NAMES } from './supabase'
 
-const labels = { cola: 'الكولا', 'ice-cream': 'الآيس كريم', spread: 'السبريد' }
+const labels = SITE_NAMES
 
 export default function PageContentEditor({ site, userId, notAdmin, onDirtyChange }) {
   const workspace = useContentWorkspace(site, userId)

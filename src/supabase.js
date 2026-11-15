@@ -11,7 +11,13 @@ export const BUCKET = 'offer-images'
 
 /** الصفحات اللي الداشبورد بتديرها — الـ key هو قيمة عمود site */
 export const SITES = [
-  { key: 'cola', label: 'Healthy Cola', emoji: '🥤' },
-  { key: 'ice-cream', label: 'Healthy Ice Cream', emoji: '🍨' },
-  { key: 'spread', label: 'Healthy Spread', emoji: '🥄' },
+  { key: 'cola', label: 'Healthy Cola', name: 'الكولا', emoji: '🥤' },
+  { key: 'ice-cream', label: 'Healthy Ice Cream', name: 'الآيس كريم', emoji: '🍨' },
+  { key: 'spread', label: 'Healthy Spread', name: 'السبريد', emoji: '🥄' },
+  { key: 'halawa-bar', label: 'Healthy Halawa Bar', name: 'الحلاوة بار', emoji: '🍯' },
+  { key: 'choco-bar', label: 'Healthy Choco Bar', name: 'الشوكولاتة بار', emoji: '🍫' },
 ]
+
+/** اسم الصفحة بالعربي — مثال: siteLabel('choco-bar') → 'الشوكولاتة بار' */
+export const SITE_NAMES = Object.fromEntries(SITES.map(s => [s.key, s.name]))
+export const siteLabel = key => SITE_NAMES[key] || key

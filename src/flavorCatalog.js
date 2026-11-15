@@ -5,9 +5,10 @@ const catalog = {
   chocoBar: [['darkHazel', 'دارك بالبندق'], ['darkAlmond', 'دارك باللوز'], ['darkPlain', 'دارك سادة'], ['milkHazel', 'ميلك بالبندق'], ['milkAlmond', 'ميلك باللوز'], ['milkPlain', 'ميلك سادة']],
   icecream: ['فانيليا', 'شوكولاتة', 'فراولة', 'مانجو', 'بلوبيري', 'فسدق', 'بندق', 'كنتالوب'].map((name, i) => [`ice-${i}`, name]),
   ketobar: ['بندق', 'زبدة فول سوداني', 'دبل شوكولاتة', 'جوز هند', 'لوز'].map((name, i) => [`keto-${i}`, name]),
+  halawaBar: [['halawaPlain', 'سادة'], ['halawaChocolate', 'بالشيكولاتة'], ['halawaPistachio', 'بالفستق'], ['halawaHazel', 'بالبندق'], ['halawaAlmond', 'باللوز']],
 }
 
-export const groupLabels = { cola: 'نكهات الكولا', spread: 'نكهات السبريد', chocoBar: 'نكهات الشيكولاتة بار', icecream: 'نكهات الآيس كريم', ketobar: 'نكهات الكيتو بار', default: 'النكهات' }
+export const groupLabels = { cola: 'نكهات الكولا', spread: 'نكهات السبريد', chocoBar: 'نكهات الشيكولاتة بار', icecream: 'نكهات الآيس كريم', ketobar: 'نكهات الكيتو بار', halawaBar: 'نكهات الحلاوة بار', default: 'النكهات' }
 
 export const catalogGroups = Object.keys(catalog)
 
@@ -59,6 +60,8 @@ export function flavorGroups(site, slug, selection, raw, shared = false) {
     if (groups.length) return groups
   }
   if (site === 'cola') return ['cola']
+  if (site === 'choco-bar') return ['chocoBar']
+  if (site === 'halawa-bar') return ['halawaBar']
   if (site === 'spread') {
     const type = spreadOfferType(slug, raw)
     return type === 'mixed' ? ['spread', 'chocoBar'] : [type === 'chocoBar' ? 'chocoBar' : 'spread']
