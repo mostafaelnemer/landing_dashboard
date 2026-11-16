@@ -519,9 +519,10 @@ export default function OfferForm({ site, offer, offers = [], nextOrder, onClose
                 <select value={spreadType || 'spread'} disabled={locked} onChange={e => changeSpreadType(e.target.value)}>
                   <option value="spread">برطمانات سبريد</option>
                   <option value="chocoBar">شيكولاتة بار</option>
+                  <option value="pasta">مكرونة</option>
                   {spreadType === 'mixed' && <option value="mixed">سبريد + شيكولاتة بار</option>}
                 </select>
-                <small className="muted">بيحدد نكهات العرض والوزن وطريقة العدّ في صفحة {siteName(site)}. اختار «شيكولاتة بار» لأي عرض بار مهما كان الـ slug.</small>
+                <small className="muted">بيحدد نكهات العرض والوزن وطريقة العدّ في صفحة {siteName(site)}. اختار «شيكولاتة بار» أو «مكرونة» لأي عرض من النوع ده مهما كان الـ slug. الوزن بيتعدّل من كل نكهة.</small>
               </label>
             )}
 

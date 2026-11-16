@@ -71,3 +71,8 @@ assert.equal(flavorData([], 'choco-bar', 'five-bars').flavorOptions.length, 6);
 assert.deepEqual(flavorGroups('halawa-bar', 'any-slug'), ['halawaBar']);
 assert.equal(flavorData([], 'halawa-bar', 'four-bars').flavorOptions.length, 5);
 assert.equal(flavorData([], 'halawa-bar', 'four-bars').flavorsAvailable, true);
+
+// Pasta offers on the spread page + dynamic weights.
+assert.deepEqual(flavorGroups('spread', 'any', null, [{ group: 'pasta', name: 'قلم' }]), ['pasta']);
+assert.equal(flavorData([], 'spread', 'any', null, null).flavorGroups[0], 'spread');
+

@@ -1,4 +1,4 @@
-import { flavorGroups, groupLabel } from './flavorCatalog'
+import { flavorGroups, groupLabel, groupMeta } from './flavorCatalog'
 import ImageUpload from './ImageUpload'
 
 export default function FlavorEditor({ site, slug, selection, flavors, shared = false, onChange, onUpload, uploading }) {
@@ -15,7 +15,7 @@ export default function FlavorEditor({ site, slug, selection, flavors, shared = 
   }
   return <div className="field flavor-editor">
     <h3 id="offer-flavors-heading" tabIndex={-1}>إدارة النكهات</h3>
-    <small className="muted">التغيير يخص العرض ده فقط. لو كل نكهات مكوّن اتخفت، العرض هيبقى غير متاح للطلب. الصور الفاضية تستخدم الصورة المحلية لو موجودة.</small>
+    <small className="muted">التغيير يخص العرض ده فقط. خانة الوزن هي اللي بتظهر جنب النكهة وفي سطر وزن العرض (سيبها فاضية للوزن الافتراضي). لو كل نكهات مكوّن اتخفت، العرض هيبقى غير متاح للطلب. الصور الفاضية تستخدم الصورة المحلية لو موجودة.</small>
     {groups.length === 0 && <p className="inline-notice">مفيش مكوّن محتاج نكهات. من «مكوّنات الباندل» زوّد «العميل يختار كام نكهة» لمكوّن واحد على الأقل.</p>}
     {groups.map(group => {
       const label = groupLabel(group, selection)
@@ -28,6 +28,7 @@ export default function FlavorEditor({ site, slug, selection, flavors, shared = 
           <div className="flavor-item">
             <div className="thumb small">{fl.image ? <img src={fl.image} alt="" /> : <span>—</span>}</div>
             <input aria-label={`اسم النكهة ${i + 1} — ${label}`} value={fl.name} onChange={e => patch(fl.id, { name: e.target.value })} placeholder="اسم النكهة" />
+            <input className="flavor-weight" aria-label={`وزن ${fl.name || `النكهة ${i + 1}`}`} value={fl.weight ?? ''} onChange={e => patch(fl.id, { weight: e.target.value })} placeholder={groupMeta[group]?.weight || 'الوزن'} title="الوزن اللي بيظهر في الصفحة، مثلاً 375 جرام" style={{ maxWidth: 120 }} />
             <ImageUpload label="صورة" onSelect={file => onUpload(fl.id, file)} disabled={uploading !== ''} busy={uploading === fl.id} />
           </div>
           <div className="flavor-tools">
@@ -38,7 +39,7 @@ export default function FlavorEditor({ site, slug, selection, flavors, shared = 
             <button type="button" className="btn ghost small-btn" disabled={members.length === 1} title={members.length === 1 ? 'اخفي آخر نكهة بدل حذفها' : 'حذف النكهة'} onClick={() => onChange(flavors.filter(f => f.id !== fl.id))}>حذف</button>
           </div>
         </div>)}
-        <button type="button" className="btn ghost" onClick={() => onChange([...flavors, { id: crypto.randomUUID(), group, name: '', is_active: true }])}>+ نكهة — {label}</button>
+        <button type="button" className="btn ghost" onClick={() => onChange([...flavors, { id: crypto.randomUUID(), group, name: '', is_active: true, ...(groupMeta[group]?.weight ? { weight: groupMeta[group].weight } : {}) }])}>+ نكهة — {label}</button>
       </fieldset>
     })}
   </div>
