@@ -76,3 +76,9 @@ assert.equal(flavorData([], 'halawa-bar', 'four-bars').flavorsAvailable, true);
 assert.deepEqual(flavorGroups('spread', 'any', null, [{ group: 'pasta', name: 'قلم' }]), ['pasta']);
 assert.equal(flavorData([], 'spread', 'any', null, null).flavorGroups[0], 'spread');
 
+// Choco bar page: offers default to choco bar, but can be jars / pasta from the type selector.
+assert.deepEqual(flavorGroups('choco-bar', 'five-bars', null, []), ['chocoBar']);
+assert.deepEqual(flavorGroups('choco-bar', 'any', null, [{ group: 'pasta', name: 'قلم' }]), ['pasta']);
+assert.deepEqual(flavorGroups('choco-bar', 'any', null, [{ group: 'spread', name: 'أطفال' }]), ['spread']);
+assert.equal(spreadOfferType('choco-bar', [], 'chocoBar'), 'chocoBar');
+

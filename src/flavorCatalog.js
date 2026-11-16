@@ -67,7 +67,7 @@ const explicitGroups = (raw) => Array.isArray(raw)
 // The spread landing has more than one product type (jars and choco bars).
 // Stored flavor groups are the source of truth, so a custom slug still renders
 // the right picker, weight and counters instead of always defaulting to jars.
-export function spreadOfferType(slug, raw) {
+export function spreadOfferType(slug, raw, fallback = 'spread') {
   const groups = explicitGroups(raw)
   const hasSpread = groups.includes('spread')
   const hasChocoBar = groups.includes('chocoBar')
@@ -75,10 +75,15 @@ export function spreadOfferType(slug, raw) {
   if (hasChocoBar) return 'chocoBar'
   if (groups.includes('pasta')) return 'pasta'
   if (hasSpread) return 'spread'
+  if (fallback !== 'spread') return fallback
   if (slug === 'spread-choco-bar') return 'mixed'
   if (slug === 'choco-bar') return 'chocoBar'
   return 'spread'
 }
+
+// Pages whose offers have an «offer type» (jars / choco bar / pasta / mixed) and the
+// type a new or legacy offer starts with.
+export const TYPED_SITES = { spread: 'spread', 'choco-bar': 'chocoBar' }
 
 export function flavorGroups(site, slug, selection, raw, shared = false) {
   if (normalizeSelection(selection)) return selectionGroups(selection)
@@ -87,10 +92,9 @@ export function flavorGroups(site, slug, selection, raw, shared = false) {
     if (groups.length) return groups
   }
   if (site === 'cola') return ['cola']
-  if (site === 'choco-bar') return ['chocoBar']
   if (site === 'halawa-bar') return ['halawaBar']
-  if (site === 'spread') {
-    const type = spreadOfferType(slug, raw)
+  if (TYPED_SITES[site]) {
+    const type = spreadOfferType(slug, raw, TYPED_SITES[site])
     return type === 'mixed' ? ['spread', 'chocoBar'] : [type]
   }
   return [slug === 'icecream' || slug === 'ketobar' ? slug : 'default']

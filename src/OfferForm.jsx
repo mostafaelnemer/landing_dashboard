@@ -3,7 +3,7 @@ import ActualPreview from './ActualPreview'
 import FlavorEditor from './FlavorEditor'
 import BundleEditor from './BundleEditor'
 import ImageUpload from './ImageUpload'
-import { defaultFlavorsForGroup, normalizeFlavors, normalizeSelection, spreadOfferType, weightNote } from './flavorCatalog'
+import { defaultFlavorsForGroup, normalizeFlavors, normalizeSelection, spreadOfferType, TYPED_SITES, weightNote } from './flavorCatalog'
 import { useEffect, useRef, useState } from 'react'
 import { supabase, SITES, SITE_NAMES } from './supabase'
 import { uploadImage } from './imageUtils'
@@ -79,10 +79,10 @@ export default function OfferForm({ site, offer, offers = [], nextOrder, onClose
   // Spread page offers can be jars or choco bars. The type lives in the saved
   // flavor groups, so custom slugs still get the right picker and counters.
   const [spreadType, setSpreadType] = useState(() => {
-    if (site !== 'spread') return null
-    if (!offer) return 'spread'
+    if (!TYPED_SITES[site]) return null
+    if (!offer) return TYPED_SITES[site]
     if (normalizeSelection(offer.selection)) return null
-    return spreadOfferType(offer.slug, offer.flavors)
+    return spreadOfferType(offer.slug, offer.flavors, TYPED_SITES[site])
   })
   const [offerPreview, setOfferPreview] = useState(null)
   const [busy, setBusy] = useState(false)
@@ -103,7 +103,7 @@ export default function OfferForm({ site, offer, offers = [], nextOrder, onClose
   const bundleGroups = isBundle ? [...new Set(f.selection.items.filter(item => item.choose > 0).map(item => item.group))] : []
   const offeredFlavorGroups = isBundle
     ? bundleGroups
-    : site === 'spread' && !isShared && spreadType
+    : TYPED_SITES[site] && !isShared && spreadType
       ? spreadType === 'mixed' ? ['spread', 'chocoBar'] : [spreadType]
       : null
 
@@ -516,10 +516,10 @@ export default function OfferForm({ site, offer, offers = [], nextOrder, onClose
               <small className="muted">{isBundle ? 'مناسب لما الباندل فيه أكتر من منتج، وكل منتج له اختيار أو كمية مختلفة.' : 'الوضع الحالي: العميل بيوزّع عدد القطع على نكهات العرض.'}</small>
             </label>
 
-            {site === 'spread' && !isBundle && !isShared && (
+            {TYPED_SITES[site] && !isBundle && !isShared && (
               <label className="field">
                 <span>نوع العرض</span>
-                <select value={spreadType || 'spread'} disabled={locked} onChange={e => changeSpreadType(e.target.value)}>
+                <select value={spreadType || TYPED_SITES[site]} disabled={locked} onChange={e => changeSpreadType(e.target.value)}>
                   <option value="spread">برطمانات سبريد</option>
                   <option value="chocoBar">شيكولاتة بار</option>
                   <option value="pasta">مكرونة</option>
@@ -665,7 +665,7 @@ export default function OfferForm({ site, offer, offers = [], nextOrder, onClose
 
             <label className="field">
               <span>الـ slug (معرّف ثابت بالإنجليزي) *</span>
-              <input dir="ltr" value={f.slug} onChange={(e) => { const slug = e.target.value.toLowerCase(); setF(p => ({ ...p, slug, flavors: isShared || (site === 'spread' && spreadType) ? p.flavors : normalizeFlavors(p.flavors.map(({ group, ...fl }) => fl), site, slug, p.selection, false) })) }} disabled={isEdit} />
+              <input dir="ltr" value={f.slug} onChange={(e) => { const slug = e.target.value.toLowerCase(); setF(p => ({ ...p, slug, flavors: isShared || (TYPED_SITES[site] && spreadType) ? p.flavors : normalizeFlavors(p.flavors.map(({ group, ...fl }) => fl), site, slug, p.selection, false) })) }} disabled={isEdit} />
               <small className="muted">
                 {isEdit
                   ? 'مش بيتغيّر بعد الإنشاء، لأن كود الـ landing بيعتمد عليه.'
