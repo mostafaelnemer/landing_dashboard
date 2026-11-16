@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from './supabase'
 import { contentFields, resolvePageContent } from './pageContent'
 
-const fieldNames = { name: 'اسم العرض', badge: 'الشارة', description: 'الوصف', note: 'الملاحظة', price: 'السعر', original_price: 'السعر قبل الخصم', units: 'عدد القطع', units_label: 'نص عدد القطع', selection: 'مكوّنات الباندل', flavors: 'النكهات', image_url: 'الصورة', accent: 'اللون', delivery_note: 'ملاحظة التوصيل', free_shipping: 'الشحن المجاني', shipping_fee: 'مبلغ الشحن', shipping_mode: 'طريقة الشحن', is_active: 'ظهور العرض', sort_order: 'الترتيب' }
+const fieldNames = { name: 'اسم العرض', badge: 'الشارة', description: 'الوصف', note: 'الملاحظة', price: 'السعر', original_price: 'السعر قبل الخصم', units: 'عدد القطع', units_label: 'نص عدد القطع', weight_label: 'سطر الوزن', selection: 'مكوّنات الباندل', flavors: 'النكهات', image_url: 'الصورة', accent: 'اللون', delivery_note: 'ملاحظة التوصيل', free_shipping: 'الشحن المجاني', shipping_fee: 'مبلغ الشحن', shipping_mode: 'طريقة الشحن', is_active: 'ظهور العرض', sort_order: 'الترتيب' }
 const operations = { baseline: 'النسخة عند تفعيل السجل', insert: 'إضافة', update: 'تعديل', delete: 'حذف' }
 const modeLabels = { free: 'توصيل مجاني', fixed: 'بمبلغ محدد', call_center: 'يتحدد مع الكول سنتر' }
 const format = (key, value) => key === 'shipping_mode' ? modeLabels[value] || 'الإعداد السابق' : display(value, key)

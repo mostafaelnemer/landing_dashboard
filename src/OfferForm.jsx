@@ -3,7 +3,7 @@ import ActualPreview from './ActualPreview'
 import FlavorEditor from './FlavorEditor'
 import BundleEditor from './BundleEditor'
 import ImageUpload from './ImageUpload'
-import { defaultFlavorsForGroup, normalizeFlavors, normalizeSelection, spreadOfferType } from './flavorCatalog'
+import { defaultFlavorsForGroup, normalizeFlavors, normalizeSelection, spreadOfferType, weightNote } from './flavorCatalog'
 import { useEffect, useRef, useState } from 'react'
 import { supabase, SITES, SITE_NAMES } from './supabase'
 import { uploadImage } from './imageUtils'
@@ -26,6 +26,7 @@ const emptyOffer = (nextOrder) => {
     original_price: '',
     units: 1,
     units_label: '',
+    weight_label: '',
     selection: null,
     flavors: [],
     image_url: '',
@@ -337,6 +338,7 @@ export default function OfferForm({ site, offer, offers = [], nextOrder, onClose
       note: f.note.trim() || null,
       units: isBundle ? bundleUnits : Number(f.units),
       units_label: f.units_label.trim() || null,
+      weight_label: f.weight_label.trim() || null,
       selection: isBundle ? {
         version: 1,
         mode: 'components',
@@ -354,6 +356,7 @@ export default function OfferForm({ site, offer, offers = [], nextOrder, onClose
         is_active: x.is_active,
         name: x.name.trim(),
         ...(x.image ? { image: x.image } : {}),
+        ...(String(x.weight ?? '').trim() ? { weight: String(x.weight).trim() } : {}),
       })),
       accent: f.accent,
     }
@@ -537,6 +540,12 @@ export default function OfferForm({ site, offer, offers = [], nextOrder, onClose
                 <input value={f.units_label} onChange={(e) => set('units_label', e.target.value)} placeholder="5 قطع" />
               </label>
             </div>
+            <label className="field">
+              <span>سطر الوزن في كارت العرض</span>
+              <input value={f.weight_label} maxLength={120} onChange={(e) => set('weight_label', e.target.value)}
+                placeholder={weightNote(f.flavors.filter(x => x.is_active && (!offeredFlavorGroups || offeredFlavorGroups.includes(x.group))), offeredFlavorGroups || [...new Set(f.flavors.map(x => x.group))]) || '⚖️ 400 جرام لكل كيس'} />
+              <small className="muted">مثال: «⚖️ 400 جرام لكل كيس». سيبه فاضي عشان يتكتب تلقائيًا من أوزان النكهات (المكتوب في الخانة كمثال).</small>
+            </label>
           </section>
 
           <div className="field offer-form-section">
