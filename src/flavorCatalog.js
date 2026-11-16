@@ -7,9 +7,11 @@ const catalog = {
   ketobar: ['بندق', 'زبدة فول سوداني', 'دبل شوكولاتة', 'جوز هند', 'لوز'].map((name, i) => [`keto-${i}`, name]),
   halawaBar: [['halawaPlain', 'سادة'], ['halawaChocolate', 'بالشيكولاتة'], ['halawaPistachio', 'بالفستق'], ['halawaHazel', 'بالبندق'], ['halawaAlmond', 'باللوز']],
   pasta: [['pastaPenne', 'قلم'], ['pastaSpaghetti', 'اسباجتي'], ['pastaFusilli', 'لولبي']],
+  // Keto bar sold on the choco-bar page (separate from the ice-cream page's «ketobar» group).
+  chocoKeto: [['ketoHazel', 'بندق'], ['ketoDoubleChoco', 'دابل شوكليت'], ['ketoCoconutChoco', 'شيكولاتة جوز هند'], ['ketoAlmond', 'لوز']],
 }
 
-export const groupLabels = { cola: 'نكهات الكولا', spread: 'نكهات السبريد', chocoBar: 'نكهات الشيكولاتة بار', icecream: 'نكهات الآيس كريم', ketobar: 'نكهات الكيتو بار', halawaBar: 'نكهات الحلاوة بار', pasta: 'أنواع المكرونة', default: 'النكهات' }
+export const groupLabels = { cola: 'نكهات الكولا', spread: 'نكهات السبريد', chocoBar: 'نكهات الشيكولاتة بار', icecream: 'نكهات الآيس كريم', ketobar: 'نكهات الكيتو بار', halawaBar: 'نكهات الحلاوة سبريد', pasta: 'أنواع المكرونة', chocoKeto: 'نكهات الكيتو بار', default: 'النكهات' }
 
 export const catalogGroups = Object.keys(catalog)
 
@@ -20,7 +22,9 @@ export const groupMeta = {
   spread: { unit: 'برطمان', plural: 'برطمانات', weight: '375 جرام', product: 'السبريد' },
   chocoBar: { unit: 'قطعة', plural: 'قطع', weight: '40 جرام', product: 'الشيكولاتة بار' },
   pasta: { unit: 'كيس', plural: 'أكياس', weight: '400 جرام', product: 'المكرونة' },
-  halawaBar: { unit: 'قطعة', plural: 'قطع', weight: '', product: 'الحلاوة بار' },
+  // Key stays «halawaBar» (saved in offers.flavors) but the product is a halawa SPREAD in jars.
+  halawaBar: { unit: 'برطمان', plural: 'برطمانات', weight: '', product: 'الحلاوة سبريد' },
+  chocoKeto: { unit: 'قطعة', plural: 'قطع', weight: '', product: 'الكيتو بار' },
 }
 export const unitFor = group => groupMeta[group]?.unit || 'قطعة'
 export const flavorWeight = flavor => String(flavor?.weight ?? '').trim() || groupMeta[flavor?.group]?.weight || ''
@@ -74,6 +78,7 @@ export function spreadOfferType(slug, raw, fallback = 'spread') {
   if (hasSpread && hasChocoBar) return 'mixed'
   if (hasChocoBar) return 'chocoBar'
   if (groups.includes('pasta')) return 'pasta'
+  if (groups.includes('chocoKeto')) return 'chocoKeto'
   if (hasSpread) return 'spread'
   if (fallback !== 'spread') return fallback
   if (slug === 'spread-choco-bar') return 'mixed'
@@ -81,7 +86,7 @@ export function spreadOfferType(slug, raw, fallback = 'spread') {
   return 'spread'
 }
 
-// Pages whose offers have an «offer type» (jars / choco bar / pasta / mixed) and the
+// Pages whose offers have an «offer type» (jars / choco bar / pasta / keto bar / mixed) and the
 // type a new or legacy offer starts with.
 export const TYPED_SITES = { spread: 'spread', 'choco-bar': 'chocoBar' }
 

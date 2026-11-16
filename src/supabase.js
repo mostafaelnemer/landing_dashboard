@@ -14,7 +14,8 @@ export const SITES = [
   { key: 'cola', label: 'Healthy Cola', name: 'الكولا', emoji: '🥤' },
   { key: 'ice-cream', label: 'Healthy Ice Cream', name: 'الآيس كريم', emoji: '🍨' },
   { key: 'spread', label: 'Healthy Spread', name: 'السبريد', emoji: '🥄' },
-  { key: 'halawa-bar', label: 'Healthy Halawa Bar', name: 'الحلاوة بار', emoji: '🍯' },
+  // الـ key فاضل 'halawa-bar' (مخزّن في عمود site) — المنتج نفسه حلاوة سبريد
+  { key: 'halawa-bar', label: 'Healthy Halawa Spread', name: 'الحلاوة سبريد', emoji: '🍯' },
   { key: 'choco-bar', label: 'Healthy Choco Bar', name: 'الشوكولاتة بار', emoji: '🍫' },
 ]
 

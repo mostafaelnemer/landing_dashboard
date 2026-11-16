@@ -82,3 +82,15 @@ assert.deepEqual(flavorGroups('choco-bar', 'any', null, [{ group: 'pasta', name:
 assert.deepEqual(flavorGroups('choco-bar', 'any', null, [{ group: 'spread', name: 'أطفال' }]), ['spread']);
 assert.equal(spreadOfferType('choco-bar', [], 'chocoBar'), 'chocoBar');
 
+
+// Keto bar on the choco-bar page: its own group, picked by the saved flavors.
+const keto = defaultFlavorsForGroup('chocoKeto');
+assert.deepEqual(keto.map(f => f.name), ['بندق', 'دابل شوكليت', 'شيكولاتة جوز هند', 'لوز']);
+assert.equal(spreadOfferType('keto-4', keto, 'chocoBar'), 'chocoKeto');
+assert.deepEqual(flavorGroups('choco-bar', 'keto-4', null, keto), ['chocoKeto']);
+assert.equal(flavorData(keto, 'choco-bar', 'keto-4').flavorOptions.length, 4);
+assert.equal(flavorData(keto, 'choco-bar', 'keto-4').flavorsAvailable, true);
+assert.deepEqual(flavorGroups('choco-bar', 'five-bars', null, []), ['chocoBar']);
+assert.equal(groupLabel('chocoKeto'), 'نكهات الكيتو بار');
+assert.equal(groupLabel('halawaBar'), 'نكهات الحلاوة سبريد');
+console.log('keto + halawa spread checks passed');

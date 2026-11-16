@@ -523,9 +523,10 @@ export default function OfferForm({ site, offer, offers = [], nextOrder, onClose
                   <option value="spread">برطمانات سبريد</option>
                   <option value="chocoBar">شيكولاتة بار</option>
                   <option value="pasta">مكرونة</option>
+                  {(site === 'choco-bar' || spreadType === 'chocoKeto') && <option value="chocoKeto">كيتو بار</option>}
                   {spreadType === 'mixed' && <option value="mixed">سبريد + شيكولاتة بار</option>}
                 </select>
-                <small className="muted">بيحدد نكهات العرض والوزن وطريقة العدّ في صفحة {siteName(site)}. اختار «شيكولاتة بار» أو «مكرونة» لأي عرض من النوع ده مهما كان الـ slug. الوزن بيتعدّل من كل نكهة.</small>
+                <small className="muted">بيحدد نكهات العرض والوزن وطريقة العدّ في صفحة {siteName(site)}. اختار «شيكولاتة بار» أو «مكرونة»{site === 'choco-bar' ? ' أو «كيتو بار»' : ''} لأي عرض من النوع ده مهما كان الـ slug. الوزن بيتعدّل من كل نكهة.</small>
               </label>
             )}
 

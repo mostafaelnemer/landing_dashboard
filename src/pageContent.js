@@ -39,7 +39,7 @@ export const PAGE_CONTENT_SECTIONS = {
     { id: 'bottom', title: 'العدّاد وشريط الطلب', fields: [...timers, checkout] },
     { id: 'footer', title: 'أسفل الصفحة', fields: [field('footerTagline', 'الوصف تحت الشعار', 'Healthy food for all people', 180), field('footerNote', 'النص الختامي', 'Healthy Spread بطعم غني يناسب حياتك الصحية.', 250, 'textarea')] },
   ],
-  'halawa-bar': barPage('🍯 جديد: حلاوة بار', 'Healthy Halawa Bar بدون سكر مضاف', 'Healthy Halawa Bar — حلاوة طحينية صحية في قطعة سهلة تاخدها معاك.'),
+  'halawa-bar': barPage('🍯 جديد: حلاوة سبريد', 'Healthy Halawa Spread بدون سكر مضاف', 'Healthy Halawa Spread — حلاوة طحينية صحية قابلة للدهن بدون سكر مضاف.'),
   'choco-bar': barPage('🍫 شيكولاتة بار 40 جرام', 'Healthy Choco Bar بدون سكر مضاف', 'Healthy Choco Bar — شيكولاتة صحية بطعم غني من غير سكر مضاف.'),
 }
 
