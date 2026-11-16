@@ -361,3 +361,12 @@ input:disabled { opacity: 0.6; }
   .share-site-image { align-items: flex-start; }
   .share-site-image-actions { width: 100%; }
 }
+
+/* Live link of the selected landing page (under the site tabs) */
+.site-link { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: -6px 0 18px; padding: 10px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.site-link-label { font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+.site-link-url { flex: 1; min-width: 180px; color: var(--primary); font-weight: 600; text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.site-link-url:hover { text-decoration: underline; }
+.site-link-actions { display: flex; gap: 8px; }
+.site-link .btn.small { padding: 6px 14px; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; }
+@media (max-width: 560px) { .site-link-url { flex-basis: 100%; order: 2; } .site-link-actions { margin-inline-start: auto; } }

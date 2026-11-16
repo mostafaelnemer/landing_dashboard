@@ -3,9 +3,8 @@ export const LANDING_URLS = {
   cola: 'https://cola.healthyandtasty.net/',
   'ice-cream': 'https://ice-cream.healthyandtasty.net/',
   spread: 'https://spread.healthyandtasty.net/',
-  // الصفحتين الجديدتين لسه ما اتنشروش: حط الرابط هنا أول ما الصفحة تترفع عشان المعاينة تشتغل.
-  'halawa-bar': null,
-  'choco-bar': null,
+  'halawa-bar': 'https://sweetness.healthyandtasty.net/',
+  'choco-bar': 'https://chocolate.healthyandtasty.net/',
 }
 
 export function landingPreviewUrl(site) {

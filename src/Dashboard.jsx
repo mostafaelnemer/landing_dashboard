@@ -7,6 +7,7 @@ import { useOfferListMotion } from './useOfferListMotion'
 import { defaultOfferImage } from './offerImages'
 import PageContentEditor from './PageContentEditor'
 import ChangeHistory from './ChangeHistory'
+import { LANDING_URLS } from './landingUrls'
 
 const fmt = (n) => Number(n).toLocaleString('en-US')
 const siteLabels = SITE_NAMES
@@ -160,6 +161,8 @@ export default function Dashboard({ session }) {
           ))}
         </div>
 
+        <SiteLink url={LANDING_URLS[site]} name={siteLabels[site] || current.label} />
+
         <div className="content-area-tabs" role="group" aria-label="نوع الإدارة">
           <button className={`btn ${area === 'offers' ? 'primary' : 'ghost'}`} aria-pressed={area === 'offers'} onClick={() => { if (area !== 'offers' && canLeaveContent()) setArea('offers') }}>العروض والنكهات</button>
           <button className={`btn ${area === 'content' ? 'primary' : 'ghost'}`} aria-pressed={area === 'content'} disabled={acting} onClick={() => setArea('content')}>محتوى الصفحة</button>
@@ -277,6 +280,36 @@ export default function Dashboard({ session }) {
           }}
         />
       )}
+    </div>
+  )
+}
+
+// Live URL of the selected landing page with copy + open buttons.
+function SiteLink({ url, name }) {
+  const [copied, setCopied] = useState(false)
+  useEffect(() => { setCopied(false) }, [url])
+  if (!url) return null
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(url)
+    } catch {
+      // Older browsers / non-HTTPS: fall back to a hidden textarea.
+      const t = document.createElement('textarea')
+      t.value = url; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0'
+      document.body.appendChild(t); t.select()
+      try { document.execCommand('copy') } finally { t.remove() }
+    }
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1800)
+  }
+  return (
+    <div className="site-link" role="group" aria-label={`رابط صفحة ${name}`}>
+      <span className="site-link-label">🔗 رابط الصفحة</span>
+      <a className="site-link-url" href={url} target="_blank" rel="noopener noreferrer" dir="ltr">{url.replace(/^https?:\/\//, '').replace(/\/$/, '')}</a>
+      <div className="site-link-actions">
+        <button type="button" className="btn ghost small" onClick={copy} aria-live="polite">{copied ? '✓ اتنسخ' : '📋 نسخ'}</button>
+        <a className="btn primary small" href={url} target="_blank" rel="noopener noreferrer">↗ فتح الصفحة</a>
+      </div>
     </div>
   )
 }
